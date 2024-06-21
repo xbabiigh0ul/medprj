@@ -21,7 +21,9 @@ public class Player : MonoBehaviour
     public float holdJumpTimer = 0.0f;
 
     public float jumpGroundThreshold = 1;
-    private Animator animator;
+    
+
+    public bool isDead = false;
 
     void Start()
     {
@@ -57,6 +59,16 @@ public class Player : MonoBehaviour
     {
         Vector2 pos = transform.position;
 
+        if (isDead)
+        {
+            return;
+        }
+
+        if (pos.y < -20)
+        {
+            isDead = true;
+        }
+
         if (!isGrounded)
         {
             if (isHoldingJump)
@@ -84,13 +96,30 @@ public class Player : MonoBehaviour
                 Ground ground = hit2D.collider.GetComponent<Ground>();
                 if (ground != null)
                 {
-                    groundHeight = ground.groundHeight;
-                    pos.y = groundHeight;
-                    velocity.y = 0;
-                    isGrounded = true;
+                  
+                  
+                        groundHeight = ground.groundHeight;
+                        pos.y = groundHeight;
+                        velocity.y = 0;
+                        isGrounded = true;
+                    
                 }
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
+
+            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
+            RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, Vector2.right, velocity.x *  Time.fixedDeltaTime);
+            if(wallHit.collider != null)
+            {
+                Ground ground = wallHit.collider.GetComponent<Ground>();
+                if(ground != null)
+                {
+                    if(pos.y < ground.groundHeight)
+                    {
+                        velocity.x = 0;
+                    }    
+                }
+            }
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
