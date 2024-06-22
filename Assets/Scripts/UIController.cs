@@ -21,10 +21,6 @@ public class UIController : MonoBehaviour
         FinalDistanceText = GameObject.Find("FinalDistanceText").GetComponent<Text>();
         results = GameObject.Find("Results");
         results.SetActive(false);
-        
-
-
-
     }
 
     // Start is called before the first frame update
@@ -53,6 +49,6 @@ public class UIController : MonoBehaviour
     }
     public void Retry()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game");
     }
 }

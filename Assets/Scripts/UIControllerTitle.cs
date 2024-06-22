@@ -18,6 +18,6 @@ public class UIControllerTitle : MonoBehaviour
 
     public void PLAY()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Samplescene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
 }
